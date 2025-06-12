@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
+import { addToCart } from '../../redux/slices/cartSlice'
+import { addToWishlist } from '../../redux/slices/wishSlice'
 
 
 
@@ -8,11 +10,12 @@ function Details() {
 
 
     const [product, setProduct] = useState({})
-    // const { products } = useSelector((state) => state.productSlice)
+    const { products } = useSelector((state) => state.productSlice)
 
     const { id } = useParams()
     // console.log(id);
     
+    const dispatch = useDispatch()
 
     useEffect(() => {
         getProduct()
@@ -44,10 +47,10 @@ function Details() {
                             </div>
                             <p className="lead" >{product?.description}</p>
                             <div className="d-flex justify-content-start">
-                                <button className='btn'>
+                                <button className='btn' onClick={()=>dispatch(addToCart(product))}>
                                 <i className="fa-solid fa-2xl  text-success  fa-cart-plus"></i>
                               </button>
-                              <button className='btn'>
+                              <button className='btn' onClick={()=>dispatch(addToWishlist(product))}>
                                 <i className="fa-solid fa-heart-circle-plus text-danger fa-2xl"></i>
                               </button>
                                 
